@@ -10,11 +10,11 @@ class ProductFixtures extends BaseFixture
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(Customer::class, 1, function (Customer $customer, $count) {
-            $customer->setName('Volodymyr')
-                ->setEmail('klekotvr@gmail.com')
-                ->setPassword('1234');
-        });
+//        $this->createMany(Customer::class, 1, function (Customer $customer, $count) {
+//            $customer->setName('Volodymyr')
+//                ->setEmail('klekotvr@gmail.com')
+//                ->setPassword('1234');
+//        });
 
         $this->createMany(Product::class, 10, function (Product $product, $count) {
             $product->setName($this->faker->word)
