@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 /**
  * Cart Test controller.
  */
-class APICartController extends AbstractFOSRestController
+class CartController extends AbstractFOSRestController
 {
     /**
      *
@@ -22,7 +22,7 @@ class APICartController extends AbstractFOSRestController
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request)
+    public function addToCart(Request $request)
     {
         $body = $request->getContent();
         $data = json_decode($body,true);
