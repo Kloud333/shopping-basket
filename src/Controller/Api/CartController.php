@@ -15,6 +15,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  */
 class CartController extends AbstractFOSRestController
 {
+
+    /**
+     *
+     * @Rest\Get("/cart")
+     */
+    public function getCart()
+    {
+        return new Response(json_encode(['cart' => '']));
+    }
+
     /**
      *
      * @Rest\Post("/cart")
