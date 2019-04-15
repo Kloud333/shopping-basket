@@ -2,19 +2,28 @@
 
 namespace App\Controller\Api;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class APITestController extends AbstractController
+/**
+ * Test controller.
+ */
+class APITestController extends AbstractFOSRestController
 {
     /**
-     * @Route("/api/test", name="api_test")
+     * Just test
+     * @Rest\Post("/test")
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/Api/APITestController.php',
-        ]);
+        $body = $request->getContent();
+
+        return new Response($body);
     }
 }
