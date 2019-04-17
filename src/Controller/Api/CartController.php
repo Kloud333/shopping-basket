@@ -25,7 +25,7 @@ class CartController extends AbstractFOSRestController
         $repository = $this->getDoctrine()->getRepository(Cart::class);
         $cart = $repository->findBy(['customerId' => $customerId]);
 
-        if(!$cart){
+        if (!$cart) {
             throw $this->createNotFoundException('Orders no found for customer - ' . $customerId);
         }
 
@@ -45,7 +45,7 @@ class CartController extends AbstractFOSRestController
     public function addToCart(Request $request)
     {
         $body = $request->getContent();
-        $data = json_decode($body,true);
+        $data = json_decode($body, true);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -63,7 +63,7 @@ class CartController extends AbstractFOSRestController
         $cartProduct->setQuantity($data['quantity']);
         $em->persist($cartProduct);
         $em->flush();
-        
+
         return new Response('Added.', 200);
     }
 }
