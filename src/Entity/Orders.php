@@ -20,9 +20,10 @@ class Orders
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
-    private $customerId;
+    private $customer;
 
     /**
      * @ORM\Column(type="integer")
@@ -39,14 +40,14 @@ class Orders
         return $this->id;
     }
 
-    public function getCustomerId(): ?int
+    public function getCustomer(): ?int
     {
-        return $this->customerId;
+        return $this->customer;
     }
 
-    public function setCustomerId(int $customerId): self
+    public function setCustomerId(int $customer): self
     {
-        $this->customerId = $customerId;
+        $this->customer = $customer;
 
         return $this;
     }

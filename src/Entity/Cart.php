@@ -17,23 +17,24 @@ class Cart
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
-    private $customerId;
+    private $customer;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCustomerId(): ?int
+    public function getCustomer(): ?int
     {
-        return $this->customerId;
+        return $this->customer;
     }
 
-    public function setCustomerId(int $customerId): self
+    public function setCustomer(int $customer): self
     {
-        $this->customerId = $customerId;
+        $this->customer = $customer;
 
         return $this;
     }

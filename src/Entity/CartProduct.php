@@ -17,14 +17,16 @@ class CartProduct
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Cart")
+     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
      */
-    private $cartId;
+    private $cart;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Product")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    private $productId;
+    private $product;
 
     /**
      * @ORM\Column(type="integer")
@@ -36,26 +38,26 @@ class CartProduct
         return $this->id;
     }
 
-    public function getCartId(): ?int
+    public function getCart(): ?int
     {
-        return $this->cartId;
+        return $this->cart;
     }
 
-    public function setCartId(int $cartId): self
+    public function setCart(int $cart): self
     {
-        $this->cartId = $cartId;
+        $this->cart = $cart;
 
         return $this;
     }
 
-    public function getProductId(): ?int
+    public function getProduct(): ?int
     {
-        return $this->productId;
+        return $this->product;
     }
 
-    public function setProductId(int $productId): self
+    public function setProduct(int $product): self
     {
-        $this->productId = $productId;
+        $this->product = $product;
 
         return $this;
     }
