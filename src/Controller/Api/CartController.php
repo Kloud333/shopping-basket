@@ -45,6 +45,9 @@ class CartController extends AbstractFOSRestController
      */
     public function addToCart(Request $request)
     {
+        // @TODO: Update inserting objects
+
+
         $body = $request->getContent();
         $data = json_decode($body, true);
 
@@ -52,15 +55,20 @@ class CartController extends AbstractFOSRestController
 
 
         $cart = new Cart();
-        $cart->setCustomerId($data['customer_id']);
+        $cart->setCustomer($data['customer_id']);
         $em->persist($cart);
         $em->flush();
 
         $lastCartId = $cart->getId();
 
         $cartProduct = new CartProduct();
-        $cartProduct->setCartId($lastCartId);
-        $cartProduct->setProductId($data['product_id']);
+        $cartProduct->setCart($lastCartId);
+        $cartProduct->setProduct($data['product_id']);
+
+        $p_id = $data['product_id'];
+        $itemType = $em->getReference('...\Product', $p_id);
+        $cartProduct->setProduct($itemType);
+
         $cartProduct->setQuantity($data['quantity']);
         $em->persist($cartProduct);
         $em->flush();
