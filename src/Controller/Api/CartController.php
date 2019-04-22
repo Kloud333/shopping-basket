@@ -20,15 +20,16 @@ class CartController extends AbstractFOSRestController
      *
      * @Rest\Get("/cart/{customerId}")
      */
-    public function getCart($customerId)
+    public function getAllCart($customerId)
     {
-        $repository = $this->getDoctrine()->getRepository(Cart::class);
-        $cart = $repository->findBy(['customerId' => $customerId]);
+        $repository = $this->getDoctrine()->getRepository(CartProduct::class);
 
-        if (!$cart) {
-            throw $this->createNotFoundException('Orders no found for customer - ' . $customerId);
-        }
+        $cart = $repository->getCart();
 
+//        if (!$cart) {
+//            throw $this->createNotFoundException('Orders no found for customer - ' . $customerId);
+//        }
+//
         $serializer = $this->container->get('serializer');
         $response = $serializer->serialize($cart, 'json');
 
