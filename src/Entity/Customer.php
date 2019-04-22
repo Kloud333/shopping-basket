@@ -16,6 +16,8 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="Customer", mappedBy="customer")
+     * @ORM\JoinColumn(name="id", referencedColumnName="customer_id")
      */
     private $id;
 

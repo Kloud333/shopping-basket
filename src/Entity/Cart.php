@@ -13,11 +13,14 @@ class Cart
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="CartProduct", inversedBy="cart")
+     * @ORM\JoinColumn(name="id", referencedColumnName="cart_id")
+     *
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\OneToOne(targetEntity="Customer")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     private $customer;

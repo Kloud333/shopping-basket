@@ -17,13 +17,13 @@ class CartProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Cart")
+     * @ORM\OneToOne(targetEntity="Cart", mappedBy="id")
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
      */
     private $cart;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Product")
+     * @ORM\OneToOne(targetEntity="Product", mappedBy="id")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;

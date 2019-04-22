@@ -16,11 +16,13 @@ class Orders
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="Orders", inversedBy="order")
+     * @ORM\JoinColumn(name="id", referencedColumnName="order_id")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Customer")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="id")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     private $customer;

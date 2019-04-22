@@ -17,7 +17,7 @@ class OrderProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Orders")
+     * @ORM\OneToOne(targetEntity="Orders", mappedBy="id")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
      */
     private $order;
