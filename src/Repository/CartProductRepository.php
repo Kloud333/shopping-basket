@@ -19,6 +19,23 @@ class CartProductRepository extends ServiceEntityRepository
         parent::__construct($registry, CartProduct::class);
     }
 
+    public function getCart()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('p.id', 'p.name', 'p.price', 'c.quantity', 'customer.name')
+            ->innerJoin('c.product', 'p')
+            ->innerJoin('c.cart', 'cart')
+            ->innerJoin('cart.customer', 'customer')
+        ;
+
+        $query = $qb->getQuery();
+//        var_dump($query->getSQL()); die;
+
+
+        return $query->execute();
+
+    }
+
     // /**
     //  * @return CartProduct[] Returns an array of CartProduct objects
     //  */
