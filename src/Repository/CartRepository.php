@@ -19,6 +19,11 @@ class CartRepository extends ServiceEntityRepository
         parent::__construct($registry, Cart::class);
     }
 
+    public function getCartByUserId($value)
+    {
+        // @TODO: Select user from the cart and create user object.
+    }
+
     // /**
     //  * @return Cart[] Returns an array of Cart objects
     //  */
