@@ -27,12 +27,12 @@ class Cart
         return $this->id;
     }
 
-    public function getCustomer(): ?int
+    public function getCustomer()
     {
         return $this->customer;
     }
 
-    public function setCustomer(int $customer): self
+    public function setCustomer(Customer $customer): self
     {
         $this->customer = $customer;
 

@@ -38,24 +38,24 @@ class CartProduct
         return $this->id;
     }
 
-    public function getCart(): ?int
+    public function getCart()
     {
         return $this->cart;
     }
 
-    public function setCart(int $cart): self
+    public function setCart(Cart $cart): self
     {
         $this->cart = $cart;
 
         return $this;
     }
 
-    public function getProduct(): ?int
+    public function getProduct()
     {
         return $this->product;
     }
 
-    public function setProduct(int $product): self
+    public function setProduct(Product $product): self
     {
         $this->product = $product;
 
