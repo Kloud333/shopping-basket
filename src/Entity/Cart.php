@@ -20,7 +20,7 @@ class Cart
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Customer")
+     * @ORM\OneToOne(targetEntity="Customer", inversedBy="id")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     private $customer;
