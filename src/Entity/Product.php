@@ -17,7 +17,7 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToOne(targetEntity="CartProduct", inversedBy="product")
+     * @ORM\OneToMany(targetEntity="CartProduct", mappedBy="product")
      * @ORM\JoinColumn(name="id", referencedColumnName="product_id")
      */
     private $id;

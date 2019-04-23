@@ -23,7 +23,7 @@ class OrderProduct
     private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Product", mappedBy="id")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="id")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
