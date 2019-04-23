@@ -19,6 +19,10 @@ class CartProductRepository extends ServiceEntityRepository
         parent::__construct($registry, CartProduct::class);
     }
 
+    /**
+     * @param int $customerId
+     * @return array
+     */
     public function getCart(int $customerId)
     {
         $qb = $this->createQueryBuilder('cart_product')
@@ -29,6 +33,23 @@ class CartProductRepository extends ServiceEntityRepository
             ->innerJoin('cart.customer', 'customer')
             ->where('customer.id = :id')
             ->setParameter('id', $customerId);
+
+        $query = $qb->getQuery();
+//        var_dump($query->getSQL()); die;
+
+        return $query->execute();
+    }
+
+    /**
+     * @param $customerId
+     * @return mixed
+     */
+    public function clearCart($customerId)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->delete()
+            ->where('c.customer = :customerId')
+            ->setParameter('customerId', $customerId);
 
         $query = $qb->getQuery();
 //        var_dump($query->getSQL()); die;
