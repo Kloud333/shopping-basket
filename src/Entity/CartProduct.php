@@ -17,13 +17,13 @@ class CartProduct
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Cart", mappedBy="id", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Cart", inversedBy="cart", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="cart_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $cart;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="id", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
