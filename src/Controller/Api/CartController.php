@@ -89,12 +89,12 @@ class CartController extends AbstractFOSRestController
      * @param int $customerId
      * @return Response
      */
-    private function clearCart(int $customerId)
+    public function clearCart(int $customerId)
     {
-        $repository = $this->getDoctrine()->getRepository(CartProduct::class);
+        $repository = $this->getDoctrine()->getRepository(Cart::class);
 
         $cart = $repository->clearCart($customerId);
 
-        return new Response('Product successfully added to cart', 200);
+        return new Response('Product successfully deleted from cart', 200);
     }
 }
