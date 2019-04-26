@@ -40,23 +40,6 @@ class CartProductRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
-    /**
-     * @param $customerId
-     * @return mixed
-     */
-    public function clearCart($customerId)
-    {
-        $qb = $this->createQueryBuilder('c')
-            ->delete()
-            ->where('c.customer = :customerId')
-            ->setParameter('customerId', $customerId);
-
-        $query = $qb->getQuery();
-//        var_dump($query->getSQL()); die;
-
-        return $query->execute();
-    }
-
     // /**
     //  * @return CartProduct[] Returns an array of CartProduct objects
     //  */

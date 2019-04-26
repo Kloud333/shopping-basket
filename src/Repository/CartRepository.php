@@ -24,6 +24,23 @@ class CartRepository extends ServiceEntityRepository
         // @TODO: Select user from the cart and create user object.
     }
 
+    /**
+     * @param $customerId
+     * @return mixed
+     */
+    public function clearCart($customerId)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->delete()
+            ->where('c.customer = :customerId')
+            ->setParameter('customerId', $customerId);
+
+        $query = $qb->getQuery();
+//        var_dump($query->getSQL()); die;
+
+        return $query->execute();
+    }
+
     // /**
     //  * @return Cart[] Returns an array of Cart objects
     //  */
