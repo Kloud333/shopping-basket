@@ -31,9 +31,13 @@ class CartController extends AbstractFOSRestController
 
         $cart = $repository->getCart($customerId);
 
+        $sum = $repository->getSum($customerId);
+
         if (!$cart) {
             throw $this->createNotFoundException('Orders not found for customer');
         }
+
+        $cart['sum'] = $sum;
 
         $serializer = $this->container->get('serializer');
         $response = $serializer->serialize($cart, 'json');
@@ -59,33 +63,25 @@ class CartController extends AbstractFOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
-        $cart = new Cart();
-        $customer_id = $data['customer_id'];
-        $customer = $em->getReference(Customer::class, $customer_id);
-        $cart->setCustomer($customer);
-        $em->persist($cart);
-        $em->flush();
 
-        $cartProduct = new CartProduct();
+        $cartRepository = $this->getDoctrine()->getRepository(Cart::class);
+        $cartProductRepository = $this->getDoctrine()->getRepository(CartProduct::class);
 
-        $lastCartId = $cart->getId();
-        $cart = $em->getReference(Cart::class, $lastCartId);
-        $cartProduct->setCart($cart);
+        $cart = $cartRepository->findOneOrCreateCart($data['customer_id']);
+        $cartProduct = $cartProductRepository->findOneOrCreateCartProduct($cart, $data['product_id']);
 
-        $product_id = $data['product_id'];
-        $product = $em->getReference(Product::class, $product_id);
-        $cartProduct->setProduct($product);
+        $cartProduct->setQuantity($cartProduct->getQuantity() + 1);
 
-        $cartProduct->setQuantity($data['quantity']);
+
         $em->persist($cartProduct);
         $em->flush();
 
-        return new Response('Product successfully added to cart', 200);
+        return new Response('Cart successfully updated', 200);
     }
 
     /**
      *
-     * @Rest\Get("/clean/cart/{customerId}")
+     * @Rest\Delete("/clean/cart/{customerId}")
      * @param int $customerId
      * @return Response
      */
@@ -93,8 +89,21 @@ class CartController extends AbstractFOSRestController
     {
         $repository = $this->getDoctrine()->getRepository(Cart::class);
 
-        $cart = $repository->clearCart($customerId);
+        $repository->clearCart($customerId);
 
         return new Response('Product successfully deleted from cart', 200);
+    }
+
+    /**
+     *
+     * @Rest\Get("/checkout/{customerId}")
+     * @param int $customerId
+     * @return Response
+     */
+    public function checkout(int $customerId)
+    {
+
+//        TODO: Create
+
     }
 }
