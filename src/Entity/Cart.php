@@ -13,14 +13,14 @@ class Cart
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToOne(targetEntity="CartProduct",  mappedBy="id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="CartProduct",  inversedBy="id", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="id", referencedColumnName="cart_id")
      *
      */
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Customer", inversedBy="id", cascade={"persist", "remove"} )
+     * @ORM\OneToOne(targetEntity="Customer", mappedBy="id", cascade={"persist", "remove"} )
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     private $customer;

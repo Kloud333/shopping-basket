@@ -17,7 +17,7 @@ class CartProduct
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Cart", inversedBy="cart", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Cart", mappedBy="cart", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $cart;
