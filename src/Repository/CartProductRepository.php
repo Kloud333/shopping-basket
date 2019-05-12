@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Cart;
 use App\Entity\CartProduct;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -38,6 +40,52 @@ class CartProductRepository extends ServiceEntityRepository
 //        var_dump($query->getSQL()); die;
 
         return $query->execute();
+    }
+
+    /**
+     * @param int $customerId
+     * @return array
+     */
+    public function getSum(int $customerId)
+    {
+        $qb = $this->createQueryBuilder('cart_product')
+            ->select('sum(product.price) * cart_product.quantity')
+            ->innerJoin('cart_product.product', 'product', 'Join:WITH')
+            ->innerJoin('cart_product.cart', 'cart')
+            ->innerJoin('cart.customer', 'customer')
+            ->where('customer.id = :id')
+            ->setParameter('id', $customerId);
+
+        $query = $qb->getQuery();
+//        var_dump($query->getSQL()); die;
+
+        $sum = $query->execute();
+
+        return reset($sum)[1];
+    }
+
+
+    public function findOneOrCreateCartProduct($cart, $productId)
+    {
+        $em = $this->getEntityManager();
+        $cartProduct = $em->getRepository(CartProduct::class);
+
+        $cartFind = $cartProduct->findBy(array('cart' => $cart->getId()));
+
+        if (!$cartFind) {
+            $cartProduct = new CartProduct();
+
+            $lastCartId = $cart->getId();
+            $cart = $em->getReference(Cart::class, $lastCartId);
+            $cartProduct->setCart($cart);
+
+            $product = $em->getReference(Product::class, $productId);
+            $cartProduct->setProduct($product);
+
+            return $cartProduct;
+        }
+
+        return reset($cartFind);
     }
 
     // /**
