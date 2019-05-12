@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Cart;
+use App\Entity\CartProduct;
+use App\Entity\Customer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,9 +21,25 @@ class CartRepository extends ServiceEntityRepository
         parent::__construct($registry, Cart::class);
     }
 
-    public function getCartByUserId($value)
+    public function findOneOrCreateCart($userId)
     {
-        // @TODO: Select user from the cart and create user object.
+        $em = $this->getEntityManager();
+        $cart = $em->getRepository(Cart::class);
+
+        $cartFind = $cart->findBy(array('customer' => $userId));
+
+        if (!$cartFind) {
+            $cart = new Cart();
+            $customer_id = $userId;
+            $customer = $em->getReference(Customer::class, $customer_id);
+            $cart->setCustomer($customer);
+            $em->persist($cart);
+            $em->flush();
+
+            return $cart;
+        }
+
+        return reset($cartFind);
     }
 
     /**
@@ -41,9 +59,9 @@ class CartRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
-    // /**
-    //  * @return Cart[] Returns an array of Cart objects
-    //  */
+// /**
+//  * @return Cart[] Returns an array of Cart objects
+//  */
     /*
     public function findByExampleField($value)
     {
