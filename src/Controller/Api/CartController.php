@@ -4,8 +4,8 @@ namespace App\Controller\Api;
 
 use App\Entity\Cart;
 use App\Entity\CartProduct;
-use App\Entity\Customer;
-use App\Entity\Product;
+use App\Entity\OrderProduct;
+use App\Entity\Orders;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,23 +87,45 @@ class CartController extends AbstractFOSRestController
      */
     public function clearCart(int $customerId)
     {
-        $repository = $this->getDoctrine()->getRepository(Cart::class);
+        $cartRepository = $this->getDoctrine()->getRepository(Cart::class);
 
-        $repository->clearCart($customerId);
+        $cartRepository->clearCart($customerId);
 
         return new Response('Product successfully deleted from cart', 200);
     }
 
     /**
      *
-     * @Rest\Get("/checkout/{customerId}")
+     * @Rest\Get("/create/order/{customerId}")
      * @param int $customerId
      * @return Response
      */
-    public function checkout(int $customerId)
+    public function createOrder(int $customerId)
     {
+        $em = $this->getDoctrine()->getManager();
 
-//        TODO: Create
+        $cartRepository = $this->getDoctrine()->getRepository(Cart::class);
+        $cartProductRepository = $this->getDoctrine()->getRepository(CartProduct::class);
+        $orderRepository = $this->getDoctrine()->getRepository(Orders::class);
+        $orderProductRepository = $this->getDoctrine()->getRepository(OrderProduct::class);
 
+        $cart = $cartProductRepository->getCart($customerId);
+        $total = $cartProductRepository->getTotal($customerId);
+
+        if (!$cart) {
+            throw $this->createNotFoundException('Orders not found for customer');
+        }
+
+        $cart['total'] = $total;
+
+        $order = $orderRepository->createOrder($customerId, $cart);
+        $orderProduct = $orderProductRepository->createOrderProduct($order, $cart);
+
+        $em->persist($orderProduct);
+        $em->flush();
+
+        $cartRepository->clearCart($customerId);
+
+        return new Response('Your Order completed successfully', 200);
     }
 }
