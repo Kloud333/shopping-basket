@@ -37,7 +37,7 @@ class CartController extends AbstractFOSRestController
             throw $this->createNotFoundException('Orders not found for customer');
         }
 
-        $cart['sum'] = $total;
+        $cart['total'] = $total;
 
         $serializer = $this->container->get('serializer');
         $response = $serializer->serialize($cart, 'json');
