@@ -31,13 +31,13 @@ class CartController extends AbstractFOSRestController
 
         $cart = $repository->getCart($customerId);
 
-        $sum = $repository->getSum($customerId);
+        $total = $repository->getTotal($customerId);
 
         if (!$cart) {
             throw $this->createNotFoundException('Orders not found for customer');
         }
 
-        $cart['sum'] = $sum;
+        $cart['sum'] = $total;
 
         $serializer = $this->container->get('serializer');
         $response = $serializer->serialize($cart, 'json');

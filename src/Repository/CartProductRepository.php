@@ -46,7 +46,7 @@ class CartProductRepository extends ServiceEntityRepository
      * @param int $customerId
      * @return array
      */
-    public function getSum(int $customerId)
+    public function getTotal(int $customerId)
     {
         $qb = $this->createQueryBuilder('cart_product')
             ->select('sum(product.price) * cart_product.quantity')
@@ -59,9 +59,9 @@ class CartProductRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
 //        var_dump($query->getSQL()); die;
 
-        $sum = $query->execute();
+        $total = $query->execute();
 
-        return reset($sum)[1];
+        return reset($total)[1];
     }
 
 
