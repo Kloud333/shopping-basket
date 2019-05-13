@@ -65,6 +65,12 @@ class CartProductRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @param $cart
+     * @param $productId
+     * @return CartProduct|\Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository|mixed
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function findOneOrCreateCartProduct($cart, $productId)
     {
         $em = $this->getEntityManager();

@@ -21,6 +21,12 @@ class CartRepository extends ServiceEntityRepository
         parent::__construct($registry, Cart::class);
     }
 
+    /**
+     * @param $userId
+     * @return Cart|\Doctrine\Common\Persistence\ObjectRepository|\Doctrine\ORM\EntityRepository|mixed
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function findOneOrCreateCart($userId)
     {
         $em = $this->getEntityManager();
