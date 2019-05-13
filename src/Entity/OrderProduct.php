@@ -17,13 +17,13 @@ class OrderProduct
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Orders", mappedBy="id")
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Orders", mappedBy="id", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Product", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="id", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
@@ -43,7 +43,7 @@ class OrderProduct
         return $this->order;
     }
 
-    public function setOrderId(int $order): self
+    public function setOrder(Orders $order): self
     {
         $this->order = $order;
 
@@ -55,7 +55,7 @@ class OrderProduct
         return $this->product;
     }
 
-    public function setProductId(int $product): self
+    public function setProduct(Product $product): self
     {
         $this->product = $product;
 

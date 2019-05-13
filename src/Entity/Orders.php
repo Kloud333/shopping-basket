@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\OrdersRepository")
  */
 class Orders
 {
@@ -16,13 +16,13 @@ class Orders
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @ORM\OneToOne(targetEntity="Orders", inversedBy="order")
+     * @ORM\OneToOne(targetEntity="Orders", inversedBy="order", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="id", referencedColumnName="order_id")
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="id", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     private $customer;
@@ -47,7 +47,7 @@ class Orders
         return $this->customer;
     }
 
-    public function setCustomerId(int $customer): self
+    public function setCustomer(Customer $customer): self
     {
         $this->customer = $customer;
 
