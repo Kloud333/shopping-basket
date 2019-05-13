@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\OrderProduct;
+use App\Entity\Orders;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,6 +19,30 @@ class OrderProductRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, OrderProduct::class);
+    }
+
+    /**
+     * @param $order
+     * @param $cart
+     * @return bool|\Doctrine\Common\Proxy\Proxy|null|object
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function createOrderProduct($order, $cart)
+    {
+        $em = $this->getEntityManager();
+        $orderProduct = new OrderProduct();
+
+        $lastCartId = $order->getId();
+        $order = $em->getReference(Orders::class, $lastCartId);
+        $orderProduct->setOrder($order);
+
+        $productId = reset($cart)['id'];
+        $product = $em->getReference(Product::class, $productId);
+        $orderProduct->setProduct($product);
+
+        $orderProduct->setQuantity(reset($cart)['quantity']);
+
+        return $orderProduct;
     }
 
     // /**
