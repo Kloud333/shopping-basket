@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Customer;
 use App\Entity\Orders;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -17,6 +18,31 @@ class OrdersRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Orders::class);
+    }
+
+    /**
+     * @param $customerId
+     * @param $cart
+     * @return Orders
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function createOrder($customerId, $cart)
+    {
+        $em = $this->getEntityManager();
+
+        $order = new Orders();
+
+        $lastCustomerId = $customerId;
+        $customer = $em->getReference(Customer::class, $lastCustomerId);
+        $order->setCustomer($customer);
+
+        $order->setStatus(1);
+        $order->setTotal($cart['total']);
+        $em->persist($order);
+        $em->flush();
+
+        return $order;
     }
 
     // /**
