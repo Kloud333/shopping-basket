@@ -42,26 +42,27 @@ class CartProductRepository extends ServiceEntityRepository
         return $query->execute();
     }
 
+
     /**
-     * @param int $customerId
-     * @return array
+     * @param array $cart
+     * @return float|int
      */
-    public function getTotal(int $customerId)
+    public function getTotal(array $cart)
     {
-        $qb = $this->createQueryBuilder('cart_product')
-            ->select('sum(product.price) * cart_product.quantity')
-            ->innerJoin('cart_product.product', 'product', 'Join:WITH')
-            ->innerJoin('cart_product.cart', 'cart')
-            ->innerJoin('cart.customer', 'customer')
-            ->where('customer.id = :id')
-            ->setParameter('id', $customerId);
+        $cart = reset($cart);
+        $quantity = $cart['quantity'] - 1;
 
-        $query = $qb->getQuery();
-//        var_dump($query->getSQL()); die;
+        if ($cart['quantity'] > 1 && $cart['quantity'] % 2 == 0) {
+            $quantity -= 2;
+        }
 
-        $total = $query->execute();
+        $total = ($cart['price'] * $quantity) / 2 + $cart['price'];
 
-        return reset($total)[1];
+        if ($total > 500) {
+            $total -= $total * 0.1;
+        }
+
+        return $total;
     }
 
 

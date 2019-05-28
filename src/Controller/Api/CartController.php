@@ -31,7 +31,7 @@ class CartController extends AbstractFOSRestController
 
         $cart = $repository->getCart($customerId);
 
-        $total = $repository->getTotal($customerId);
+        $total = $repository->getTotal($cart);
 
         if (!$cart) {
             throw $this->createNotFoundException('Orders not found for customer');
