@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Cart;
 use App\Entity\CartProduct;
 use App\Entity\Product;
+use App\Services\discount\TotalDiscount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -49,18 +50,8 @@ class CartProductRepository extends ServiceEntityRepository
      */
     public function getTotal(array $cart)
     {
-        $cart = reset($cart);
-        $quantity = $cart['quantity'] - 1;
 
-        if ($cart['quantity'] > 1 && $cart['quantity'] % 2 == 0) {
-            $quantity -= 2;
-        }
-
-        $total = ($cart['price'] * $quantity) / 2 + $cart['price'];
-
-        if ($total > 500) {
-            $total -= $total * 0.1;
-        }
+//        var_dump($cart); die;
 
         return $total;
     }

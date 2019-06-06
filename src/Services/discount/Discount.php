@@ -2,8 +2,7 @@
 
 namespace App\Services\discount;
 
-
 interface Discount
 {
-    public function calculate();
+    public function calculate(array $cart);
 }

@@ -2,12 +2,13 @@
 
 namespace App\Services\discount;
 
-
 class PercentOfTotal implements Discount
 {
 
-    public function calculate()
+    public function calculate(array $cart)
     {
-        // TODO: Implement calculate() method.
+//        if ($total > 500) {
+//            $total -= $total * 0.1;
+//        }
     }
 }
