@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Cart;
 use App\Entity\CartProduct;
 use App\Entity\Product;
-use App\Services\discount\TotalDiscount;
+use App\Services\Discount\TotalDiscount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -42,20 +42,6 @@ class CartProductRepository extends ServiceEntityRepository
 
         return $query->execute();
     }
-
-
-    /**
-     * @param array $cart
-     * @return float|int
-     */
-    public function getTotal(array $cart)
-    {
-
-//        var_dump($cart); die;
-
-        return $total;
-    }
-
 
     /**
      * @param $cart
