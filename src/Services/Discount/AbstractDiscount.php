@@ -20,12 +20,12 @@ abstract class AbstractDiscount
     /**
      * @param $cart
      * @param int $total
-     * @return int
+     * @return float
      */
     public function calculateDiscount($cart, $total = 0)
     {
         if ($this->next) {
-            $this->next->calculateDiscount($cart, $total);
+            return $this->next->calculate($cart, $total);
         } else {
             return $total;
         }

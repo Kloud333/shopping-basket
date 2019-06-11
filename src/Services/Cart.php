@@ -10,6 +10,7 @@ class Cart
     /**
      * @param $cartProducts
      * @param $customerId
+     * @return float
      */
     public function calculateTotal($cartProducts, $customerId)
     {

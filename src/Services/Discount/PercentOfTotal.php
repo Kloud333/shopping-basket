@@ -7,13 +7,14 @@ class PercentOfTotal extends AbstractDiscount
     /**
      * @param array $cart
      * @param $total
+     * @return float
      */
     public function calculate(array $cart, $total)
     {
-//        if ($total > 500) {
-//            $total -= $total * 0.1;
-//        }
+        if ($total > 500) {
+            $total -= 10;
+        }
 
-        parent::calculateDiscount($cart, $total);
+        return parent::calculateDiscount($cart, $total);
     }
 }
