@@ -30,20 +30,20 @@ class CartController extends AbstractFOSRestController
     {
         $repository = $this->getDoctrine()->getRepository(CartProduct::class);
 
-        $cartProduct = $repository->getCartProduct($customerId);
+        $cartProducts = $repository->getCartProduct($customerId);
 
-        if (!$cartProduct) {
+        if (!$cartProducts) {
             throw $this->createNotFoundException('Orders not found for customer');
         }
 
         $cart = new \App\Services\Cart();
 
-        $total = $cart->calculateTotal($cartProduct, $customerId);
+        $total = $cart->calculateTotal($cartProducts, $customerId);
 
-        $cartProduct['total'] = $total;
+        $cartProducts['total'] = $total;
 
         $serializer = $this->container->get('serializer');
-        $response = $serializer->serialize($cartProduct, 'json');
+        $response = $serializer->serialize($cartProducts, 'json');
 
         return new Response($response, 200);
     }
