@@ -14,7 +14,7 @@ class Cart
      */
     public function calculateTotal($cartProducts, $customerId)
     {
-        $discount = $this->getUserDiscounts($customerId);
+        $discount = $this->getUserDiscounts($cartProducts, $customerId);
 
         return $discount->calculate($cartProducts, 0);
     }
@@ -23,21 +23,18 @@ class Cart
      * @param $customerId
      * @return PercentOfTotal|SecondProductDiscount|null
      */
-    protected function getUserDiscounts($customerId)
+    protected function getUserDiscounts($cartProducts, $customerId)
     {
         $discount = null;
 
-        if (true) {
-            //TODO: add check if discount applicable
+        if (!empty($cartProducts)) {
             $discount = new SecondProductDiscount();
         }
 
-        if (true) {
-            //TODO: add check if discount applicable
-
+        if (reset($cartProducts)['quantity'] >= 2) {
             $percentOfTotal = new PercentOfTotal();
 
-            if ($discount) {
+            if (isset($discount)) {
                 $discount->setNext($percentOfTotal);
             } else {
                 $discount = $percentOfTotal;
