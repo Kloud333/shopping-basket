@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Cart;
+//use App\Services\Cart;
 use App\Entity\CartProduct;
 use App\Entity\OrderProduct;
 use App\Entity\Orders;
@@ -20,8 +21,8 @@ class CartController extends AbstractFOSRestController
 {
 
     /**
-     *
      * @Rest\Get("/cart/{customerId}")
+     *
      * @param int $customerId
      * @return Response
      */
@@ -29,24 +30,25 @@ class CartController extends AbstractFOSRestController
     {
         $repository = $this->getDoctrine()->getRepository(CartProduct::class);
 
-        $cart = $repository->getCart($customerId);
+        $cartProduct = $repository->getCartProduct($customerId);
 
-//        $total = $repository->getTotal($cart);
-
-        if (!$cart) {
+        if (!$cartProduct) {
             throw $this->createNotFoundException('Orders not found for customer');
         }
 
-//        $cart['total'] = $total;
+        $cart = new \App\Services\Cart();
+
+        $total = $cart->calculateTotal($cartProduct, $customerId);
+
+        $cartProduct['total'] = $total;
 
         $serializer = $this->container->get('serializer');
-        $response = $serializer->serialize($cart, 'json');
+        $response = $serializer->serialize($cartProduct, 'json');
 
         return new Response($response, 200);
     }
 
     /**
-     *
      * @Rest\Post("/cart")
      *
      * @param Request $request
@@ -80,8 +82,8 @@ class CartController extends AbstractFOSRestController
     }
 
     /**
-     *
      * @Rest\Delete("/clean/cart/{customerId}")
+     *
      * @param int $customerId
      * @return Response
      */
@@ -97,6 +99,7 @@ class CartController extends AbstractFOSRestController
     /**
      *
      * @Rest\Get("/create/order/{customerId}")
+     *
      * @param int $customerId
      * @return Response
      */
