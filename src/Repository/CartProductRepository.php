@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Cart;
 use App\Entity\CartProduct;
 use App\Entity\Product;
-use App\Services\Discount\TotalDiscount;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -26,7 +25,7 @@ class CartProductRepository extends ServiceEntityRepository
      * @param int $customerId
      * @return array
      */
-    public function getCart(int $customerId)
+    public function getCartProduct(int $customerId)
     {
         $qb = $this->createQueryBuilder('cart_product')
             ->select('product.id', 'product.name', 'product.price', 'cart_product.quantity')
