@@ -26,7 +26,7 @@ class CartController extends AbstractFOSRestController
      * @param int $customerId
      * @return Response
      */
-    public function getAllCart(int $customerId)
+    public function getCart(int $customerId)
     {
         $repository = $this->getDoctrine()->getRepository(CartProduct::class);
 
