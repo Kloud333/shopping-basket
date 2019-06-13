@@ -20,6 +20,7 @@ class Cart
     }
 
     /**
+     * @param $cartProducts
      * @param $customerId
      * @return PercentOfTotal|SecondProductDiscount|null
      */
