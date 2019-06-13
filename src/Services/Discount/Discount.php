@@ -2,10 +2,10 @@
 
 namespace App\Services\Discount;
 
-abstract class AbstractDiscount
+class Discount
 {
     /**
-     * @var AbstractDiscount
+     * @var Discount
      */
     protected $next;
 
@@ -14,7 +14,11 @@ abstract class AbstractDiscount
      */
     public function setNext($discount)
     {
-        $this->next = $discount;
+        if (!$this->next) {
+            $this->next = $discount;
+        } else {
+            $this->next->setNext($discount);
+        }
     }
 
     /**
