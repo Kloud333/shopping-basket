@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Customer;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class CostomerFixtures extends BaseFixture
+class CustomerFixtures extends BaseFixture
 {
     public function loadData(ObjectManager $manager)
     {
