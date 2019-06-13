@@ -2,7 +2,7 @@
 
 namespace App\Services\Discount;
 
-class PercentOfTotal extends AbstractDiscount
+class PercentOfTotal extends Discount
 {
     /**
      * @var int

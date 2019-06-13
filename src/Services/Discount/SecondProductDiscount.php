@@ -2,7 +2,7 @@
 
 namespace App\Services\Discount;
 
-class SecondProductDiscount extends AbstractDiscount
+class SecondProductDiscount extends Discount
 {
     /**
      * @param array $cart
