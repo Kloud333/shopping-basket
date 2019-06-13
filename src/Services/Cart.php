@@ -32,7 +32,7 @@ class Cart
         }
 
         if (reset($cartProducts)['quantity'] >= 2) {
-            $percentOfTotal = new PercentOfTotal();
+            $percentOfTotal = new PercentOfTotal(500,10);
 
             if (isset($discount)) {
                 $discount->setNext($percentOfTotal);
