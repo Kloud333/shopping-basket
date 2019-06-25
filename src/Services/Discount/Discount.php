@@ -34,4 +34,19 @@ class Discount
             return $total;
         }
     }
+
+    /**
+     * @param array $cart
+     * @param $total
+     * @return float
+     */
+    public function calculate(array $cart, $total)
+    {
+        $total = array_sum(array_map(function ($item) {
+                return $item['price'] * $item['quantity'];
+            }, $cart)
+        );
+
+        return $total;
+    }
 }

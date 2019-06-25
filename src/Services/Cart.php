@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Services\Discount\Discount;
 use App\Services\Discount\PercentOfTotal;
 use App\Services\Discount\SecondProductDiscount;
 
@@ -22,18 +23,18 @@ class Cart
     /**
      * @param $cartProducts
      * @param $customerId
-     * @return PercentOfTotal|SecondProductDiscount|null
+     * @return PercentOfTotal|SecondProductDiscount|Discount
      */
     protected function getUserDiscounts($cartProducts, $customerId)
     {
-        $discount = null;
+        $discount = new Discount();
 
         if (!empty($cartProducts)) {
             $discount = new SecondProductDiscount();
         }
 
         if (reset($cartProducts)['quantity'] >= 2) {
-            $percentOfTotal = new PercentOfTotal(500,10);
+            $percentOfTotal = new PercentOfTotal(500, 10);
 
             if (isset($discount)) {
                 $discount->setNext($percentOfTotal);
