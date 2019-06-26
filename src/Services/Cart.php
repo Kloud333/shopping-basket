@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Services\Discount\Discount;
-use App\Services\Discount\PercentOfTotal;
+use App\Services\Discount\TotalFixedDiscount;
 use App\Services\Discount\SecondProductDiscount;
 
 class Cart
@@ -23,7 +23,7 @@ class Cart
     /**
      * @param $cartProducts
      * @param $customerId
-     * @return PercentOfTotal|SecondProductDiscount|Discount
+     * @return TotalFixedDiscount|SecondProductDiscount|Discount
      */
     protected function getUserDiscounts($cartProducts, $customerId)
     {
@@ -34,15 +34,20 @@ class Cart
         }
 
         if (reset($cartProducts)['quantity'] >= 2) {
-            $percentOfTotal = new PercentOfTotal(500, 10);
+            $totalFixedDiscount = new TotalFixedDiscount(500, 10);
 
             if (isset($discount)) {
-                $discount->setNext($percentOfTotal);
+                $discount->setNext($totalFixedDiscount);
             } else {
-                $discount = $percentOfTotal;
+                $discount = $totalFixedDiscount;
             }
         }
 
         return $discount;
+    }
+
+    protected function getAvailableUserDiscounts()
+    {
+        //TODO Implement the available discounts for the user
     }
 }
