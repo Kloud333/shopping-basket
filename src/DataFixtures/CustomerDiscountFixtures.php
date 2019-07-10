@@ -9,9 +9,11 @@ class CustomerDiscountFixtures extends BaseFixture
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(CustomerDiscount::class, 1, function (CustomerDiscount $customerDiscount, $count) {
+        $discounts = ['loyalty-card', 'second-product', 'fixed-total'];
+
+        $this->createManyWithCustomData(CustomerDiscount::class, $discounts, function (CustomerDiscount $customerDiscount, $discount) {
             $customerDiscount->setCustomer(1)
-                ->setDiscount('loyalty cards');
+                ->setDiscount($discount);
         });
 
         $manager->flush();
