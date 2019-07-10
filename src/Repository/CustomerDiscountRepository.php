@@ -19,6 +19,23 @@ class CustomerDiscountRepository extends ServiceEntityRepository
         parent::__construct($registry, CustomerDiscount::class);
     }
 
+    /**
+     * @param int $customerId
+     * @return array
+     */
+    public function getAllCustomerDiscounts(int $customerId)
+    {
+        $qb = $this->createQueryBuilder('cd')
+            ->select('cd.discount')
+            ->where('cd.customer = :id')
+            ->setParameter('id', $customerId);
+
+        $query = $qb->getQuery();
+//        var_dump($query->getSQL()); die;
+
+        return $query->execute();
+    }
+
     // /**
     //  * @return CustomerDiscount[] Returns an array of CustomerDiscount objects
     //  */
