@@ -25,7 +25,7 @@ class LoyaltyCardDiscount extends Discount
      */
     public function calculate(array $cart, $total)
     {
-        $total = ($total * $this->percentOfTotal) / 100;
+        $total -= ($total * $this->percentOfTotal) / 100;
 
         return parent::calculateDiscount($cart, $total);
     }
