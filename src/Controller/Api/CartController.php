@@ -7,6 +7,7 @@ use App\Entity\Cart;
 use App\Entity\CartProduct;
 use App\Entity\OrderProduct;
 use App\Entity\Orders;
+use App\Entity\CustomerDiscount;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,9 +29,11 @@ class CartController extends AbstractFOSRestController
      */
     public function getCart(int $customerId)
     {
-        $repository = $this->getDoctrine()->getRepository(CartProduct::class);
+        $cartProductRepository = $this->getDoctrine()->getRepository(CartProduct::class);
+        $customerDiscountRepository = $this->getDoctrine()->getRepository(CustomerDiscount::class);
 
-        $cartProducts = $repository->getCartProduct($customerId);
+        $cartProducts = $cartProductRepository->getCartProduct($customerId);
+        $customerDiscounts = $customerDiscountRepository->getAllCustomerDiscounts($customerId);
 
         if (!$cartProducts) {
             throw $this->createNotFoundException('Orders not found for customer');
@@ -38,7 +41,7 @@ class CartController extends AbstractFOSRestController
 
         $cart = new \App\Services\Cart();
 
-        $total = $cart->calculateTotal($cartProducts, $customerId);
+        $total = $cart->calculateTotal($cartProducts, $customerId, $customerDiscounts);
 
         $cartProducts['total'] = $total;
 
