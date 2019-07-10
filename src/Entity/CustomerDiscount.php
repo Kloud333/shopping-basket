@@ -18,7 +18,7 @@ class CustomerDiscount
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="id", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="id", cascade={"remove"})
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      *
      */
